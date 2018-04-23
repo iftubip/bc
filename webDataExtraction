@@ -1,0 +1,19 @@
+library(data.table)
+mydat <- fread('C://Some/File/Path.csv')
+mydat <- fread('url of table')
+head(mydat)
+library(RCurl)
+myfile <- getURL('https://sakai.unc.edu/access/content/group/3d1eb92e-7848-4f55-90c3-7c72a54e7e43/public/data/bycatch.csv', ssl.verifyhost=FALSE, ssl.verifypeer=FALSE)
+class(myfile)
+mydat <- read.csv(textConnection(myfile), header=T)
+head(mydat)
+
+baseURL <- 'url'
+suffixURL <- 'DailyHistory.html?HideSpecis=1&format=1'
+Date <- Sys.Date()
+datestring <- format(Date, '%Y/%m/%d')
+url2fetch <- paste(baseURL, datestring, suffixURL, sep='/')
+url_content <- getURL(url2fetch)
+url_content <- gsub('', '', url_content)
+weather_data <- read.csv(textConnection(url_content))
+head(weather_data)
